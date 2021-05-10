@@ -2,16 +2,22 @@ import setupGuildView from "../../views/setupGuild"
 
 const setupGuildCommand = {
   name: '/setup-guild',
-  async listener({ ack, body, client }: any) {
+  async listener({ ack, body, command, client }: any) {
     await ack()
 
     try {
-      const result = await client.views.open({
+      const { channel_id, user_id } = command
+      
+      const response = await client.users.info({ user: user_id})
+      console.log(response)
+      
+      await client.views.open({
         trigger_id: body.trigger_id,
-        view: setupGuildView.view
+        view: {
+          ...setupGuildView.view,
+          private_metadata: channel_id
+        },
       })
-
-      console.log(result)
     } catch (error) {
       console.error(error)
     }

@@ -1,4 +1,4 @@
-const name = 'setup-guild'
+const name = 'setup_guild'
 
 const view = {
 	type: 'modal',
@@ -42,8 +42,15 @@ const view = {
 const listener = async ({ ack, body, view, client }: any) => {
 	try {
 		await ack();
-	
-		console.log(body, view)
+
+		const client_id = view.state.values.client_id_block.client_id.value
+		const client_token = view.state.values.client_token_block.client_token.value
+		const channel_id = view.private_metadata
+		
+		await client.chat.postMessage({
+			channel: channel_id,
+			text: 'Successfully set up guild'
+		})
 	} catch (error) {
 		console.error(error)
 	}

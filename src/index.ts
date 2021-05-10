@@ -13,13 +13,12 @@ const app = new App({
   logLevel,
   processBeforeResponse,
   token: process.env.SLACK_BOT_TOKEN,
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  socketMode: true
+  signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
 customMiddleware.enableAll(app);
 
-app.command(setupGuildCommand.name, setupGuildCommand.listener)
+app.command(setupGuildCommand.name, setupGuildCommand.listener);
 app.view(setupGuildView.name, setupGuildView.listener);
 
 (async () => {
